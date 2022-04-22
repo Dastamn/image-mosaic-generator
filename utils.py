@@ -1,3 +1,4 @@
+import random
 from glob import glob
 from typing import List, Tuple
 
@@ -7,10 +8,13 @@ from PIL import Image
 from typing_extensions import Literal
 
 
-def get_image_paths(dir: str, ext: List[str] = ['jpg', 'jpeg', 'png']) -> List[str]:
-    ext = [(e, e.upper()) for e in ext]
+def get_image_paths(dir: str, ext: List[str] = ['jpg', 'jpeg', 'png'], limit: int = None) -> List[str]:
+    ext = [(e.lower(), e.upper()) for e in ext]
     ext = tuple(f'.{i}' for item in ext for i in item)
-    return list(filter(lambda x: x.endswith(ext), glob(f'{dir}/**/*', recursive=True)))
+    paths = glob(f'{dir}/**/*', recursive=True)
+    if limit:
+        paths = random.sample(paths, limit)
+    return list(filter(lambda x: x.endswith(ext), paths))
 
 
 def image_as_array(path: str, crop: int = None) -> np.ndarray:
