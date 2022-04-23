@@ -1,4 +1,5 @@
 import argparse
+import re
 from pathlib import Path
 
 import numpy as np
@@ -10,7 +11,9 @@ from utils import get_image_paths, image_as_array, pool2d
 
 
 def main(args: argparse.Namespace):
-    paths = get_image_paths(args.source)
+    ext = ['jpg', 'jpeg', 'png'] if not args.ext \
+        else re.split(r', *', args.ext)
+    paths = get_image_paths(args.source, ext, args.limit)
     print('Loading source images...')
     images = np.asarray([image_as_array(path, args.crop)
                          for path in tqdm(paths)])
@@ -50,13 +53,17 @@ def main(args: argparse.Namespace):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Image Mosaic')
-    parser.add_argument('--source', type=str, default=None,
-                        help='Source image directory')
-    parser.add_argument('--crop', type=int, default=32,
-                        help='Source image size')
+    parser = argparse.ArgumentParser(description='Image Mosaic Generator')
     parser.add_argument('--target', type=str, default=None,
                         help='Path to target image')
+    parser.add_argument('--source', type=str, default=None,
+                        help='Source image directory')
+    parser.add_argument('--limit', type=int, default=None,
+                        help='Limit the number of source images used')
+    parser.add_argument('--ext', type=str, default='jpg,jpeg,png',
+                        help='Coma separated string of acceptable image file extensions')
+    parser.add_argument('--crop', type=int, default=32,
+                        help='Source image size')
     parser.add_argument('--stride', type=int, default=2,
                         help='Pooling factor of target image')
     parser.add_argument('--poolsize', type=int, default=2,
