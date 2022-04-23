@@ -16,11 +16,33 @@ To this end, the algorithm computes, for each image in the source set, the avera
 $ python main.py --source <path_to_image_directory> --target <path_to_image> --poolsize <pooling_size> --stride <stride_size>
 ```
 
-Check [`main.py`](https://github.com/Dastamn/image-mosaic/blob/main/main.py#L53) to see all the available options.
+Check out [`main.py`](https://github.com/Dastamn/image-mosaic/blob/main/main.py#L53) to see all the available options.
 
-## Mosaic Sample Using [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html)
+## Using [CIFAR-10](https://www.cs.toronto.edu/~kriz/cifar.html)
+
+### Pixel Approximation
 
 <section align='center'>
-    <img src='samples/nier.jpg' height='300'/>
-    <img src='samples/nier_mosaic.jpg' height='300'/>
+    <img src='cifar_test.jpg' height='300' />
+</section>
+
+### Generated Samples
+
+<section align='center'>
+    <img src='samples/paris.jpg' width='450'/>
+    <img src='samples/paris_mosaic.jpg' width='450'/>
+</section>
+
+&ensp;
+
+<section align='center'>
+    <img src='samples/tokyo.jpg' width='450'/>
+    <img src='samples/tokyo_mosaic.jpg' width='450'/>
+</section>
+
+&ensp;
+
+<section align='center'>
+    <img src='samples/new_york.jpg' width='450'/>
+    <img src='samples/new_york_mosaic.jpg' width='450'/>
 </section>
