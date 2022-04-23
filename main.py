@@ -116,5 +116,3 @@ if __name__ == '__main__':
         gen(args)
     elif (args.subcommand == 'test'):
         test(args)
-    else:
-        print("invalid command")
