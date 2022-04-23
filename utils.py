@@ -17,16 +17,21 @@ def get_image_paths(dir: str, ext: List[str] = ['jpg', 'jpeg', 'png'], limit: in
     return list(filter(lambda x: x.endswith(ext), paths))
 
 
-def image_as_array(path: str, crop: int = None) -> np.ndarray:
-    img = Image.open(path)
-    img = np.asarray(img, dtype=np.uint8)
-    if crop:
-        crop = min(crop, min(img.shape[:2]))
-        h, w, _ = img.shape
-        h_start = h//2 - crop//2
-        w_start = w//2 - crop//2
-        img = img[h_start:h_start+crop, w_start:w_start+crop, :]
-    return img
+def image_as_array(path: str, size: int = None) -> np.ndarray:
+    im = Image.open(path)
+    w, h = im.size
+    w_start, h_start = 0, 0
+    w_size, h_size = w, h
+    if size:
+        # resize so that smallest dim matches 'size'
+        w, h = (size*w//h, size) if w > h else (size, size*h//w)
+        w_start, h_start = w//2 - min(size, w)//2, h//2 - min(size, h)//2
+        w_size, h_size = size, size
+        im = im.resize((w, h))
+    im = np.asarray(im, dtype=np.uint8)
+    # center crop
+    im = im[h_start:h_start+h_size, w_start:w_start+w_size, :]
+    return im
 
 
 def tile(x: np.ndarray, window: Tuple[int, int] = (2, 2), stride: int = 2) -> np.ndarray:
