@@ -8,7 +8,6 @@ To this end, the algorithm computes, for each source image, the average value of
 
 - Python 3.7
 - NumPy 1.21.5
-- Pillow 9.0.1
 
 ## Basic Usage
 
